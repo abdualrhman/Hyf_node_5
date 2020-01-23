@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Form</title>
+</head>
+<body>
+        <input type="text" id="title" name="title" placeholder="title">
+        <input type="text" id="description" name="description" placeholder="description">
+        <input type="button" onclick="fetchData()" value="send">
+        <p id="message"></p>
+    <script>
+        const title = document.getElementById("title").value;
+        const description = document.getElementById("description").value;
+
+        const data = {
+            title, 
+            description
+        }
+        const fetchData = ()=>{
+            console.log(data)
+        return fetch("/api/add-todo", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(res=> {
+            
+            return res.text()
+        })
+        .then((text)=>{
+            const message = document.getElementById("message");
+            message.innerHTML = text
+        })
+    }
+
+    </script>
+</body>
+</html>
